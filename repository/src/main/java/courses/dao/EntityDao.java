@@ -1,18 +1,39 @@
 package courses.dao;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
+import java.util.List;
 
 public interface EntityDao {
 
+    /**.
+     * Method to add object
+     */
     <T> void insert(T object);
 
+    /**
+     * Method to delete object
+     */
     <T> void delete(T object) throws InvocationTargetException,
-            NoSuchMethodException, IllegalAccessException, SQLException;
+            NoSuchMethodException, IllegalAccessException;
 
-    <T> void deleteById(T id) throws SQLException;
+    /**
+     * Method to delete object by ID
+     */
+    <T> void deleteById(T id) throws InvocationTargetException,
+            NoSuchMethodException, IllegalAccessException;
 
+    /**
+     * Method to update information about the object
+     */
     <T> void update(T object);
 
-    void select();
+    /**
+     * Method to get information about the object.
+     */
+    List select();
+
+    /**
+     * Method to get Entity
+     */
+    <K,T> T getEntity(K id);
 }

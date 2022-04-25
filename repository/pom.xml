@@ -16,57 +16,24 @@
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
-    <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.liquibase.ext/liquibase-hibernate5 -->
-        <dependency>
-            <groupId>org.liquibase.ext</groupId>
-            <artifactId>liquibase-hibernate5</artifactId>
-            <version>4.9.1</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>4.9.0</version>
-        </dependency>
-
-    </dependencies>
-
     <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-                <plugin>
-                    <groupId>org.liquibase</groupId>
-                    <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>4.9.0</version>
-                    <configuration>
-                        <propertyFile>src/main/resources/liquibase/database.properties</propertyFile>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>update</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>test</id>
-                            <phase>process-test-resources</phase>
-                            <configuration>
-                                <propertyFile>src/test/resources/databaseH2.properties</propertyFile>
-                            </configuration>
-                            <goals>
-                                <goal>update</goal>
-                                <goal>status</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
-
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.9.1</version>
+                <configuration>
+                    <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
