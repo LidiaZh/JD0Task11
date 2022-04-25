@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+
+    <changeSet id="1" author="Oliviya Kustova">
+        <comment>create table person</comment>
+        <sql>
+            create table person
+            (
+                id      int not null
+                    primary key,
+                name    varchar(255) null,
+                surname varchar(255) null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Oliviya Kustova">
+        <comment>create table marks</comment>
+        <sql>
+            create table marks
+            (
+                id     int auto_increment
+                    primary key,
+                mark   int null,
+                review varchar(255) null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="Oliviya Kustova">
+        <comment>create table course</comment>
+        <sql>
+            create table course
+            (
+                id          int auto_increment
+                    primary key,
+                description varchar(255) null,
+                hours       varchar(255) null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="Oliviya Kustova">
+        <comment>create table teacher</comment>
+        <sql>
+            create table teacher
+            (
+                id      int not null
+                    primary key,
+                name    varchar(255) null,
+                surname varchar(255) null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="Oliviya Kustova">
+        <comment>create table student</comment>
+        <sql>
+            create table student
+            (
+                id      int not null
+                    primary key,
+                name    varchar(255) null,
+                surname varchar(255) null
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="Oliviya Kustova">
+        <comment>create table task</comment>
+        <sql>
+            create table task
+            (
+                id          int auto_increment
+                    primary key,
+                description varchar(255) null,
+                course_id   int null,
+                mark_id     int null,
+                constraint task_course_fk
+                    foreign key (course_id) references course (id),
+                constraint task_marks_fk
+                    foreign key (mark_id) references marks (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="Oliviya Kustova">
+        <comment>create table teacher_courses</comment>
+        <sql>
+            create table teacher_courses
+            (
+                id_teacher int not null,
+                id_course  int not null,
+                primary key (id_teacher, id_course),
+                constraint teacher_courses_course_fk
+                    foreign key (id_course) references course (id),
+                constraint teacher_courses_teacher_fk
+                    foreign key (id_teacher) references teacher (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="8" author="Oliviya Kustova">
+        <comment>create table student_courses</comment>
+        <sql>
+            create table students_courses
+            (
+                id_student int not null,
+                id_course  int not null,
+                primary key (id_student, id_course),
+                constraint students_courses_student_fk
+                    foreign key (id_student) references student (id),
+                constraint students_courses_course_fk
+                    foreign key (id_course) references course (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
