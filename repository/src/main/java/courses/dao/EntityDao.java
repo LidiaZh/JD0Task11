@@ -5,7 +5,8 @@ import java.util.List;
 
 public interface EntityDao {
 
-    /**.
+    /**
+     * .
      * Method to add object
      */
     <T> void insert(T object);
@@ -19,7 +20,7 @@ public interface EntityDao {
     /**
      * Method to delete object by ID
      */
-    <T> void deleteById(T id) throws InvocationTargetException,
+    void deleteById(Integer id) throws InvocationTargetException,
             NoSuchMethodException, IllegalAccessException;
 
     /**
@@ -35,5 +36,5 @@ public interface EntityDao {
     /**
      * Method to get Entity
      */
-    <K,T> T getEntity(K id);
+    <T> T getEntity(Integer id);
 }

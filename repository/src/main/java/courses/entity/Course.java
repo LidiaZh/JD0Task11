@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -48,6 +47,7 @@ public class Course implements Serializable {
      */
     @ManyToMany(mappedBy = "courses")
     @ToString.Exclude
+    @Builder.Default
     private Set<Student> students = new HashSet<>();
 
     /**
@@ -56,13 +56,6 @@ public class Course implements Serializable {
     @ManyToMany(mappedBy = "courses")
     @ToString.Exclude
     private Set<Teacher> teachers = new HashSet<>();
-
-    /**
-     * Connection with table "Task"
-     */
-    @OneToMany(mappedBy = "course")
-    @ToString.Exclude
-    private Set<Task> tasks = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

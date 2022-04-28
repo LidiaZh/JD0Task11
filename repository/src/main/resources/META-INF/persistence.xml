@@ -11,6 +11,7 @@
         <class>courses.entity.Student</class>
         <class>courses.entity.Teacher</class>
         <class>courses.entity.Course</class>
+        <class>courses.entity.Admin</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>

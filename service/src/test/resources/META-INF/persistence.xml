@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <persistence-unit name="task11">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>courses.entity.Task</class>
+        <class>courses.entity.Mark</class>
+        <class>courses.entity.Person</class>
+        <class>courses.entity.Student</class>
+        <class>courses.entity.Teacher</class>
+        <class>courses.entity.Course</class>
+        <class>courses.util.HibernateUtil</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:h2:mem:test?createDatabaseIfNotExist=true"/>
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <property name="hibernate.dialect.storage_engine" value="innodb"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.connection.pool_size" value="10"/>
+            <property name="hibernate.connection.isolation" value="2"/>
+        </properties>
+    </persistence-unit>
+</persistence>

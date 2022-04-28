@@ -1,6 +1,7 @@
 package courses.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,9 +24,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity(name = "Teacher")
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @Table(name = "TEACHER")
 public class Teacher extends Person implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,4 +41,13 @@ public class Teacher extends Person implements Serializable {
     )
     @ToString.Exclude
     private Set<Course> courses = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", surname='" + getSurname() + '\'' +
+                '}';
+    }
 }

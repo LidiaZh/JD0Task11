@@ -1,194 +1,110 @@
 package managment;
 
-import courses.dao.EntityDaoImpl;
+import courses.dao.EntityDaoImplAdmin;
+import courses.dao.EntityDaoImplTeacher;
 import courses.entity.Course;
 import courses.entity.Mark;
-import courses.entity.Person;
 import courses.entity.Student;
 import courses.entity.Task;
 import courses.entity.Teacher;
-
-import java.lang.reflect.InvocationTargetException;
-
-import static java.util.Set.of;
+import managment.implementation.AdminServiceImpl;
+import managment.implementation.StudentServiceImpl;
+import managment.implementation.TeacherServiceImpl;
+import managment.interfaces.StudentService;
 
 /**
  * Main Class
  */
 public class Manager {
-    public static void main(String[] args)
-            throws InvocationTargetException,
-            NoSuchMethodException, IllegalAccessException {
+    public static void main(String[] args) {
 
         /**
-         * Create courses
+         * AdminService
          */
-        Course course1 = Course.builder()
-                .description("Math")
-                .hours("140")
-                .build();
-
-        Course course2 = Course.builder()
-                .description("Gym")
-                .hours("150")
-                .build();
-
-        Course course3 = Course.builder()
-                .description("Physics")
-                .hours("150")
-                .build();
-
+        System.out.println("\n************Admin Service******************");
+        AdminServiceImpl as = new AdminServiceImpl<>(new EntityDaoImplAdmin());
         /**
-         * Create DaoImplementation
+         * Create Courses
          */
-        EntityDaoImpl<? extends Course, ?> daoCourse
-                = new EntityDaoImpl<>(Course.class);
-        daoCourse.insert(course1);
-        daoCourse.insert(course2);
-        daoCourse.insert(course3);
-
-        /**
-         * Create Students
-         */
-        Student student1 = Student.builder()
-                .name("Mihail")
-                .surname("Lutikov")
-                .courses(of(course1, course2))
-                .build();
-
-        Student student2 = Student.builder()
-                .name("Maria")
-                .surname("Cvetkova")
-                .courses(of(course1))
-                .build();
-
-        /**
-         * Create DaoImplementation
-         */
-        EntityDaoImpl<? extends Person, ?> daoStudents
-                = new EntityDaoImpl<>(Student.class);
-        daoStudents.insert(student1);
-        daoStudents.insert(student2);
-
+        Course course1 = as.createCourse("Math", "240");
+        Course course2 = as.createCourse("Gym", "150");
+        Course course3 = as.createCourse("Physics", "160");
+        System.out.println("\n____________Table of Courses____________");
+        as.printCourse();
         /**
          * Create Teachers
          */
-        Teacher teacher1 = Teacher.builder()
-                .name("Valeria")
-                .surname("Petrova")
-                .courses(of(course1, course2))
-                .build();
-
-        Teacher teacher2 = Teacher.builder()
-                .name("Galina")
-                .surname("Ivanova")
-                .courses(of(course1))
-                .build();
+        Teacher teacher1 = as.createTeacher("Valeria", "Petrova");
+        Teacher teacher2 = as.createTeacher("Galina", "Ivanovf");
+        System.out.println("\n____________Table of Teachers____________");
+        as.printTeacher();
+        /**
+         * ConnectTeacherAndCourses
+         */
+        as.connectTeacherAndCourse(teacher1, course1);
+        as.connectTeacherAndCourse(teacher1, course3);
+        as.connectTeacherAndCourse(teacher2, course2);
+        System.out.println("\n____________Table of Teachers and Courses____________");
+        as.printCourse();
 
         /**
-         * Create DaoImplementation
+         * Create Mark
          */
-        EntityDaoImpl<? extends Person, ?> daoTeacher
-                = new EntityDaoImpl<>(Teacher.class);
-        daoTeacher.insert(teacher1);
-        daoTeacher.insert(teacher2);
+        Mark mark1 = as.createMark(1);
+        Mark mark2 = as.createMark(2);
+        Mark mark3 = as.createMark(3);
+        Mark mark4 = as.createMark(4);
+        Mark mark5 = as.createMark(5);
+        Mark mark6 = as.createMark(6);
+        Mark mark7 = as.createMark(7);
+        Mark mark8 = as.createMark(8);
+        Mark mark9 = as.createMark(9);
+        Mark mark10 = as.createMark(10);
 
         /**
-         * Create Marks
+         * StudentService
          */
-        Mark mark1 = Mark.builder()
-                .mark(10)
-                .review("Amazing!!!")
-                .build();
-
-        Mark mark2 = Mark.builder()
-                .mark(5)
-                .build();
-
-        Mark mark3 = Mark.builder()
-                .mark(7)
-                .build();
-
-        Mark mark4 = Mark.builder()
-                .mark(8)
-                .build();
+        System.out.println("\n************Student Service******************");
+        StudentService ss = new StudentServiceImpl();
+        Student student1 = ss.register("Mihail", "Lutikov");
+        Student student2 = ss.register("Maria", "Cvetkova");
+        System.out.println("=========================================================================================");
+        ss.enrollInCourse(student1, course1);
+        System.out.println("=========================================================================================");
+        ss.enrollInCourse(student2, course2);
+        System.out.println("=========================================================================================");
+//        ss.searchInTasks(3, 2, 1);
+//        System.out.println("=========================================================================================");
+//        ss.searchInTasks(3, 1, 2);
+//        System.out.println("=========================================================================================");
 
         /**
-         * Create DaoImplementation
+         * TeacherService
          */
-        EntityDaoImpl<? extends Mark, ?> daoMark
-                = new EntityDaoImpl<>(Mark.class);
-        daoMark.insert(mark1);
-        daoMark.insert(mark2);
-        daoMark.insert(mark3);
-        daoMark.insert(mark4);
-
+        System.out.println("\n************Teacher Service******************");
+        TeacherServiceImpl ts = new TeacherServiceImpl(new EntityDaoImplTeacher());
         /**
          * Create Task
          */
-        Task task1 = Task.builder()
-                .description("Task1")
-                .course(course1)
-                .mark(mark2)
-                .build();
-
-        Task task2 = Task.builder()
-                .description("Task2")
-                .course(course2)
-                .mark(mark1)
-                .build();
-
-        Task task3 = Task.builder()
-                .description("Task3")
-                .course(course2)
-                .mark(mark3)
-                .build();
-
-        /**
-         * Create DaoImplementation
-         */
-        EntityDaoImpl<? extends Task, ?> daoTask
-                = new EntityDaoImpl<>(Task.class);
-        daoTask.insert(task1);
-        daoTask.insert(task2);
-        daoTask.insert(task3);
-
-        /**
-         * Create DaoImplementation
-         */
-        EntityDaoImpl<? extends Person, ?> daoPerson
-                = new EntityDaoImpl<>(Person.class);
-
-        System.out.println("\n____________Table of Courses____________");
-        daoCourse.select();
-
-        System.out.println("\n____________Table of Students____________");
-        daoStudents.select();
-
-        System.out.println("\n____________Table of Teachers____________");
-        daoTeacher.select();
-
-        System.out.println("\n____________Table of Marks____________");
-        daoMark.select();
-        daoMark.deleteById(3);
-        System.out.println("\n____________Table of Marks after delete " +
-                "mark with id = 3____________");
-        daoMark.select();
-
+        Task task1 = ts.addTask("Task1");
+        Task task2 = ts.addTask("Task2");
+        Task task3 = ts.addTask("Task3");
+        Task task4 = ts.addTask("Task4");
         System.out.println("\n____________Table of Task____________");
-        daoTask.select();
-        task2.setMark(null);
-        System.out.println("\n____________Table of Task after change mark____________");
-        daoTask.update(task2);
-
-        System.out.println("\n____________Table of Marks____________");
-        daoMark.select();
-
-        System.out.println("\n____________Attempt to delete course1____________");
-        daoCourse.delete(course1);
-        daoCourse.select();
-
-        System.out.println("\n____________Table of Person____________");
-        daoPerson.select();
+        ts.showTask();
+        ts.deleteTask(task4.getId());
+        System.out.println("\n\n____________Table of Task after Delete Task4____________");
+        ts.showTask();
+        ts.setTaskToStudent(student1, task1);
+        ts.setTaskToStudent(student1, task2);
+        ts.setTaskToStudent(student2, task1);
+        System.out.println("\n\n____________Table of Task after set Students____________");
+        ts.showTask();
+        ts.rateTask(1, mark8, "Amazing!");
+        ts.rateTask(3, mark6, null);
+        System.out.println("\n\n____________Table of Task with Mark____________");
+        ts.showTaskWithMark();
+        System.out.println("\n\n____________Table of Task without Mark____________");
+        ts.showTaskWithoutMark();
     }
 }

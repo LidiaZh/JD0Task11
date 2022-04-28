@@ -55,16 +55,5 @@ public class Person implements Serializable {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", surname='" + getSurname() + '\'' +
-                '}';
-    }
-
 }
 

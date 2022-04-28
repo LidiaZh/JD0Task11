@@ -1,6 +1,7 @@
 package courses.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -39,5 +41,20 @@ public class Student extends Person implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "id_course")}
     )
     @ToString.Exclude
+    @Builder.Default
     private Set<Course> courses = new HashSet<>();
+
+    @OneToMany(mappedBy = "student")
+    @ToString.Exclude
+    private Set<Task> tasks = new HashSet<>();
+
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", surname='" + getSurname() + '\'' +
+                '}';
+    }
 }

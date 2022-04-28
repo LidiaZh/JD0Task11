@@ -40,9 +40,6 @@ public class Mark implements Serializable {
     @Column(name = "mark")
     private int mark;
 
-    @Column(name = "review")
-    private String review;
-
     /**
      * Connection with table "Task"
      */

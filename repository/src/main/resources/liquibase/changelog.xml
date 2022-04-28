@@ -4,7 +4,6 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-
     <changeSet id="1" author="Oliviya Kustova">
         <comment>create table person</comment>
         <sql>
@@ -23,10 +22,9 @@
         <sql>
             create table marks
             (
-                id     int auto_increment
+                id   int auto_increment
                     primary key,
-                mark   int null,
-                review varchar(255) null
+                mark int null
             );
         </sql>
     </changeSet>
@@ -71,24 +69,6 @@
     </changeSet>
 
     <changeSet id="6" author="Oliviya Kustova">
-        <comment>create table task</comment>
-        <sql>
-            create table task
-            (
-                id          int auto_increment
-                    primary key,
-                description varchar(255) null,
-                course_id   int null,
-                mark_id     int null,
-                constraint task_course_fk
-                    foreign key (course_id) references course (id),
-                constraint task_marks_fk
-                    foreign key (mark_id) references marks (id)
-            );
-        </sql>
-    </changeSet>
-
-    <changeSet id="7" author="Oliviya Kustova">
         <comment>create table teacher_courses</comment>
         <sql>
             create table teacher_courses
@@ -104,7 +84,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="8" author="Oliviya Kustova">
+    <changeSet id="7" author="Oliviya Kustova">
         <comment>create table student_courses</comment>
         <sql>
             create table students_courses
@@ -116,6 +96,39 @@
                     foreign key (id_student) references student (id),
                 constraint students_courses_course_fk
                     foreign key (id_course) references course (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="8" author="Oliviya Kustova">
+        <comment>create table task</comment>
+        <sql>
+            create table task
+            (
+                id          int auto_increment
+                    primary key,
+                description varchar(255) null,
+                review      varchar(255) null,
+                done        varchar(30) null,
+                student_id  int null,
+                mark_id     int null,
+                constraint task_student_fk
+                    foreign key (student_id) references course (id),
+                constraint task_marks_fk
+                    foreign key (mark_id) references marks (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="9" author="Oliviya Kustova">
+        <comment>create table admin</comment>
+        <sql>
+            create table admin
+            (
+                id      int not null
+                    primary key,
+                name    varchar(255) null,
+                surname varchar(255) null
             );
         </sql>
     </changeSet>
